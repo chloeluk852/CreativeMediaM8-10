@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="images/logo.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Preface - Movie Trailers</title>
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f0f0;
+      }
+      h1, h2 {
+        text-align: center;
+        color: #333;
+      }
+      .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      a {
+        text-decoration: none;
+        color: #007bff;
+        transition: color 0.3s ease;
+      }
+      a:hover {
+        color: #0056b3;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .card {
+        width: 200px;
+        margin: 10px;
+        text-align: center;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+      .card p {
+        padding: 10px;
+        margin: 0;
+      }
+      .text-center {
+        text-align: center;
+      }
+      .toggle-view {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .toggle-view:hover {
+        background-color: #0056b3;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="images/Preface logo_grey.png" height="80" class="center">
+    <h1>Creative Media Design</h1>
+    <h2>The Movie Trailers</h2>
+    
+    <ul id="videoList" class="hidden"></ul>
+    <div id="cardContainer" class="container"></div>
+    <script>
+      const imageMap = {
+        "Abby Yu": "Abby Yu.png",
+        "Addison Ong": "Addison Ong.png",
+        "Adelle Wu": "Adelle Wu.png",
+        "Aison Chiu": "Aison Chiu.png",
+        "Andreea Cheung": "Andreea Cheung.png",
+        "Annette Yu": "Annette Yu.png",
+        "Brandon Kwok": "Brandon Kwok.png",
+        "Charles Liu": "Charles Liu.png",
+        "Chloe Wong": "Chloe Wong.png",
+        "Curtis Leung": "Curtis Leung.png",
+        "Curtis Wong": "Curtis Wong.png",
+        "Cyrus Lai": "Cyrus Lai.png",
+        "Elgar Lam": "Elgar Lam.png",
+        "Hei Yu Hailey Siu": "Hei Yu Hailey Siu.png",
+        "Jayden Heng": "Jayden Heng.png",
+        "Marcus Cheung": "Marcus Cheung.png",
+        "Maxwell Liu": "Maxwell Liu.png",
+        "Natalie Tsang": "Natalie Tsang.png",
+        "Sek Ching Isabella Li": "Sek Ching Isabella Li.png",
+        "Tin Yat Javen Hooi": "Tin Yat Javen Hooi.png",
+        "Tsz Yin Abby Siu": "Tsz Yin Abby Siu.png",
+        "Zac Woo": "Zac Woo.webp"
+      };
+
+      fetch("videos.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const videoList = document.getElementById("videoList");
+          const cardContainer = document.getElementById("cardContainer");
+          
+          data.videos.forEach((video) => {
+            // Create list item
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = `video.html?name=${encodeURIComponent(video.name)}&id=${encodeURIComponent(video.fileId)}`;
+            a.textContent = video.name;
+            li.appendChild(a);
+            videoList.appendChild(li);
+
+            // Create card
+            const card = document.createElement("div");
+            card.className = "card";
+            const imageSrc = imageMap[video.name] || "placeholder.png";
+            card.innerHTML = `
+              <img src="images/${imageSrc}" alt="${video.name}" onerror="this.src='images/placeholder.png'">
+              <p><a href="video.html?name=${encodeURIComponent(video.name)}&id=${encodeURIComponent(video.fileId)}">${video.name}</a></p>
+            `;
+            cardContainer.appendChild(card);
+          });
+        });
+
+      // Toggle view functionality
+      const toggleButton = document.getElementById('toggleView');
+      const videoList = document.getElementById('videoList');
+      const cardContainer = document.getElementById('cardContainer');
+
+      toggleButton.addEventListener('click', () => {
+        videoList.classList.toggle('hidden');
+        cardContainer.classList.toggle('hidden');
+        toggleButton.textContent = videoList.classList.contains('hidden') ? 'Show List View' : 'Show Card View';
+      });
+    </script>
+  </body>
+</html>
