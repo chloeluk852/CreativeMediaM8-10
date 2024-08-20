@@ -34,13 +34,16 @@
       
       ul {
         list-style-type: none;
-        margin: 0;
         padding: 0;
+      }
+      .sticky {
+        margin: 0;
         overflow: hidden;
         background-color: #ffffff;
         position: -webkit-sticky; /* Safari */
         position: sticky;
         top: 0;
+        z-index: 100; /* Ensure the navbar is above other content */
       }
       li {
         margin-bottom: 10px;
@@ -105,8 +108,8 @@
   </head>
   <body>
     <div class="navbar">
-      <ul>
-        <img src="images/Preface logo_grey.png" height="80" class="center">
+      <ul class="sticky">
+        <img src="images/Preface logo_grey.png" height="80" >
       </ul>
     </div>
     <h1>Creative Media Design</h1>
